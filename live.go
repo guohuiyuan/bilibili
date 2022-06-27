@@ -13,7 +13,7 @@ import (
 const (
 	// LiveRoomInfoURL 查看直播间信息
 	LiveRoomInfoURL = "https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom?room_id=%v"
-	// UserLiveURL 查看直播信息
+	// UserLiveURL 查看直播用户信息
 	UserLiveURL = "https://api.bilibili.com/x/space/acc/info?mid=%v"
 	// LURL b站直播间前缀
 	LURL = "https://live.bilibili.com/"
