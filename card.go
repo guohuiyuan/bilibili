@@ -15,15 +15,16 @@ type Card struct {
 		} `json:"cover"`
 		OrigType int `json:"orig_type"`
 	} `json:"item"`
-	AID       interface{} `json:"aid"`
-	BvID      interface{} `json:"bvid"`
-	Dynamic   interface{} `json:"dynamic"`
-	Pic       string      `json:"pic"`
-	Title     string      `json:"title"`
-	ID        int         `json:"id"`
-	Summary   string      `json:"summary"`
-	ImageUrls []string    `json:"image_urls"`
-	Sketch    struct {
+	AID             interface{} `json:"aid"`
+	BvID            interface{} `json:"bvid"`
+	Dynamic         interface{} `json:"dynamic"`
+	Pic             string      `json:"pic"`
+	Title           string      `json:"title"`
+	ID              int         `json:"id"`
+	Summary         string      `json:"summary"`
+	ImageUrls       []string    `json:"image_urls"`
+	OriginImageUrls []string    `json:"origin_image_urls"`
+	Sketch          struct {
 		Title     string `json:"title"`
 		DescText  string `json:"desc_text"`
 		CoverURL  string `json:"cover_url"`
@@ -39,6 +40,16 @@ type Card struct {
 		Share    int `json:"share"`
 		Like     int `json:"like"`
 	} `json:"stat"`
+	Stats struct {
+		Aid      int `json:"aid"`
+		View     int `json:"view"`
+		Danmaku  int `json:"danmaku"`
+		Reply    int `json:"reply"`
+		Favorite int `json:"favorite"`
+		Coin     int `json:"coin"`
+		Share    int `json:"share"`
+		Like     int `json:"like"`
+	} `json:"stats"`
 	Owner struct {
 		Name    string `json:"name"`
 		Pubdate int    `json:"pubdate"`
@@ -56,13 +67,14 @@ type Card struct {
 		WatchedShow    string `json:"watched_show"`
 		Title          string `json:"title"`
 	} `json:"live_play_info"`
-	Intro    string      `json:"intro"`
-	Schema   string      `json:"schema"`
-	Author   interface{} `json:"author"`
-	PlayCnt  int         `json:"play_cnt"`
-	ReplyCnt int         `json:"reply_cnt"`
-	TypeInfo string      `json:"type_info"`
-	User     struct {
+	Intro      string      `json:"intro"`
+	Schema     string      `json:"schema"`
+	Author     interface{} `json:"author"`
+	AuthorName string      `json:"author_name"`
+	PlayCnt    int         `json:"play_cnt"`
+	ReplyCnt   int         `json:"reply_cnt"`
+	TypeInfo   string      `json:"type_info"`
+	User       struct {
 		Name  string `json:"name"`
 		Uname string `json:"uname"`
 	} `json:"user"`
