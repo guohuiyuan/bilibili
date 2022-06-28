@@ -47,7 +47,7 @@ func VideoInfo(id string) (msg []message.MessageSegment, err error) {
 	if err == nil {
 		data, err = web.GetData(fmt.Sprintf(VideoInfoURL, id, ""))
 	} else {
-		data, err = web.GetData(fmt.Sprintf(VideoInfoURL, 0, id))
+		data, err = web.GetData(fmt.Sprintf(VideoInfoURL, "", id))
 	}
 	if err != nil {
 		return
