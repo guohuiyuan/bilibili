@@ -50,12 +50,12 @@ func LiveCard2msg(str string) (msg []message.MessageSegment, err error) {
 	}
 	msg = append(msg, message.Image(card.RoomInfo.Keyframe))
 	msg = append(msg, message.Text(card.RoomInfo.Title, "\n"))
-	msg = append(msg, message.Text("主播：", card.AnchorInfo.BaseInfo.Uname, "\n"))
-	msg = append(msg, message.Text("房间号：", card.RoomInfo.RoomID, "\n"))
+	msg = append(msg, message.Text("主播: ", card.AnchorInfo.BaseInfo.Uname, "\n"))
+	msg = append(msg, message.Text("房间号: ", card.RoomInfo.RoomID, "\n"))
 	if card.RoomInfo.ShortID != 0 {
-		msg = append(msg, message.Text("短号：", card.RoomInfo.ShortID, "\n"))
+		msg = append(msg, message.Text("短号: ", card.RoomInfo.ShortID, "\n"))
 	}
-	msg = append(msg, message.Text("分区：", card.RoomInfo.ParentAreaName))
+	msg = append(msg, message.Text("分区: ", card.RoomInfo.ParentAreaName))
 	if card.RoomInfo.ParentAreaName != card.RoomInfo.AreaName {
 		msg = append(msg, message.Text("-", card.RoomInfo.AreaName))
 	}
@@ -65,9 +65,9 @@ func LiveCard2msg(str string) (msg []message.MessageSegment, err error) {
 		msg = append(msg, message.Text("直播中 ", humanNum(card.RoomInfo.Online), "人气\n"))
 	}
 	if card.RoomInfo.ShortID != 0 {
-		msg = append(msg, message.Text("直播间链接：", LURL, card.RoomInfo.ShortID))
+		msg = append(msg, message.Text("直播间链接: ", LURL, card.RoomInfo.ShortID))
 	} else {
-		msg = append(msg, message.Text("直播间链接：", LURL, card.RoomInfo.RoomID))
+		msg = append(msg, message.Text("直播间链接: ", LURL, card.RoomInfo.RoomID))
 	}
 
 	return

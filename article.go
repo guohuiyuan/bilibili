@@ -31,7 +31,7 @@ func ArticleCard2msg(str string, defaultID string) (msg []message.MessageSegment
 		msg = append(msg, message.Image(card.OriginImageUrls[i]))
 	}
 	msg = append(msg, message.Text(card.Title, "\n"))
-	msg = append(msg, message.Text("UP主：", card.AuthorName, "\n"))
+	msg = append(msg, message.Text("UP主: ", card.AuthorName, "\n"))
 	msg = append(msg, message.Text(humanNum(card.Stats.View), "阅读 ", humanNum(card.Stats.Reply), "评论", "\n"))
 	msg = append(msg, message.Text(CURL, defaultID))
 	return

@@ -92,7 +92,7 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 	case 1:
 		msg = append(msg, message.Text(card.User.Uname, typeMsg[cType], "\n"))
 		msg = append(msg, message.Text(card.Item.Content, "\n"))
-		msg = append(msg, message.Text("转发的内容：\n"))
+		msg = append(msg, message.Text("转发的内容: \n"))
 		var originMsg []message.MessageSegment
 		originMsg, err = DynamicCard2msg(card.Origin, card.Item.OrigType)
 		if err != nil {
@@ -114,7 +114,7 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 		msg = append(msg, message.Image(card.Pic))
 		msg = append(msg, message.Text(card.Desc, "\n"))
 		msg = append(msg, message.Text(card.ShareSubtitle, "\n"))
-		msg = append(msg, message.Text("视频链接：", card.ShortLink, "\n"))
+		msg = append(msg, message.Text("视频链接: ", card.ShortLink, "\n"))
 	case 16:
 		msg = append(msg, message.Text(card.User.Name, "在", time.Unix(int64(card.Item.UploadTime), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n"))
 		msg = append(msg, message.Text(card.Item.Description))
@@ -127,7 +127,7 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 			msg = append(msg, message.Image(card.ImageUrls[i]))
 		}
 		if card.ID != 0 {
-			msg = append(msg, message.Text("文章链接：https://www.bilibili.com/read/cv", card.ID, "\n"))
+			msg = append(msg, message.Text("文章链接: https://www.bilibili.com/read/cv", card.ID, "\n"))
 		}
 	case 256:
 		msg = append(msg, message.Text(card.Upper, "在", time.Unix(int64(card.Ctime), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n"))
@@ -135,7 +135,7 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 		msg = append(msg, message.Image(card.Cover))
 		msg = append(msg, message.Text(card.Intro, "\n"))
 		if card.ID != 0 {
-			msg = append(msg, message.Text("音频链接：https://www.bilibili.com/audio/au", card.ID, "\n"))
+			msg = append(msg, message.Text("音频链接: https://www.bilibili.com/audio/au", card.ID, "\n"))
 		}
 
 	case 2048:
@@ -144,15 +144,15 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 		msg = append(msg, message.Text(card.Sketch.Title, "\n"))
 		msg = append(msg, message.Text(card.Sketch.DescText, "\n"))
 		msg = append(msg, message.Image(card.Sketch.CoverURL))
-		msg = append(msg, message.Text("分享链接：", card.Sketch.TargetURL, "\n"))
+		msg = append(msg, message.Text("分享链接: ", card.Sketch.TargetURL, "\n"))
 	case 4308:
 		if dynamicCard.Desc.UserProfile.Info.Uname != "" {
 			msg = append(msg, message.Text(dynamicCard.Desc.UserProfile.Info.Uname, typeMsg[cType], "\n"))
 		}
 		msg = append(msg, message.Image(card.LivePlayInfo.Cover))
 		msg = append(msg, message.Text(card.LivePlayInfo.Title, "\n"))
-		msg = append(msg, message.Text("房间号：", card.LivePlayInfo.RoomID, "\n"))
-		msg = append(msg, message.Text("分区：", card.LivePlayInfo.ParentAreaName))
+		msg = append(msg, message.Text("房间号: ", card.LivePlayInfo.RoomID, "\n"))
+		msg = append(msg, message.Text("分区: ", card.LivePlayInfo.ParentAreaName))
 		if card.LivePlayInfo.ParentAreaName != card.LivePlayInfo.AreaName {
 			msg = append(msg, message.Text("-", card.LivePlayInfo.AreaName))
 		}
@@ -161,12 +161,12 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 		} else {
 			msg = append(msg, message.Text("直播中 ", card.LivePlayInfo.WatchedShow, "\n"))
 		}
-		msg = append(msg, message.Text("直播链接：", card.LivePlayInfo.Link))
+		msg = append(msg, message.Text("直播链接: ", card.LivePlayInfo.Link))
 	default:
-		msg = append(msg, message.Text("动态id：", dynamicCard.Desc.DynamicIDStr, "未知动态类型：", cType, "\n"))
+		msg = append(msg, message.Text("动态id: ", dynamicCard.Desc.DynamicIDStr, "未知动态类型: ", cType, "\n"))
 	}
 	if dynamicCard.Desc.DynamicIDStr != "" {
-		msg = append(msg, message.Text("动态链接：", TURL, dynamicCard.Desc.DynamicIDStr))
+		msg = append(msg, message.Text("动态链接: ", TURL, dynamicCard.Desc.DynamicIDStr))
 	}
 	return
 }
