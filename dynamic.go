@@ -150,9 +150,9 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 			msg = append(msg, message.Text(dynamicCard.Desc.UserProfile.Info.Uname, typeMsg[cType], "\n"))
 		}
 		msg = append(msg, message.Image(card.LivePlayInfo.Cover))
-		msg = append(msg, message.Text(card.LivePlayInfo.Title, "\n"))
-		msg = append(msg, message.Text("房间号: ", card.LivePlayInfo.RoomID, "\n"))
-		msg = append(msg, message.Text("分区: ", card.LivePlayInfo.ParentAreaName))
+		msg = append(msg, message.Text(card.LivePlayInfo.Title, "\n",
+			"房间号: ", card.LivePlayInfo.RoomID, "\n",
+			"分区: ", card.LivePlayInfo.ParentAreaName))
 		if card.LivePlayInfo.ParentAreaName != card.LivePlayInfo.AreaName {
 			msg = append(msg, message.Text("-", card.LivePlayInfo.AreaName))
 		}
