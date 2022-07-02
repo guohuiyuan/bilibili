@@ -49,9 +49,9 @@ func LiveCard2msg(str string) (msg []message.MessageSegment, err error) {
 		return
 	}
 	msg = append(msg, message.Image(card.RoomInfo.Keyframe))
-	msg = append(msg, message.Text(card.RoomInfo.Title, "\n"))
-	msg = append(msg, message.Text("主播: ", card.AnchorInfo.BaseInfo.Uname, "\n"))
-	msg = append(msg, message.Text("房间号: ", card.RoomInfo.RoomID, "\n"))
+	msg = append(msg, message.Text(card.RoomInfo.Title, "\n",
+		"主播: ", card.AnchorInfo.BaseInfo.Uname, "\n",
+		"房间号: ", card.RoomInfo.RoomID, "\n"))
 	if card.RoomInfo.ShortID != 0 {
 		msg = append(msg, message.Text("短号: ", card.RoomInfo.ShortID, "\n"))
 	}

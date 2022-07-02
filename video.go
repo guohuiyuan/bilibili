@@ -30,13 +30,13 @@ func VideoCard2msg(str string) (msg []message.MessageSegment, err error) {
 	if err != nil {
 		return
 	}
-	msg = append(msg, message.Text("标题: ", card.Title, "\n"))
-	msg = append(msg, message.Text("UP主: ", card.Owner.Name, "\n"))
-	msg = append(msg, message.Text("播放: ", humanNum(card.Stat.View), ", 弹幕: ", humanNum(card.Stat.Danmaku)))
+	msg = append(msg, message.Text("标题: ", card.Title, "\n",
+		"UP主: ", card.Owner.Name, "\n",
+		"播放: ", humanNum(card.Stat.View), " 弹幕: ", humanNum(card.Stat.Danmaku)))
 	msg = append(msg, message.Image(card.Pic))
-	msg = append(msg, message.Text("点赞: ", humanNum(card.Stat.Like), ", 投币: ", humanNum(card.Stat.Coin), "\n"))
-	msg = append(msg, message.Text("收藏: ", humanNum(card.Stat.Favorite), ", 分享: ", humanNum(card.Stat.Share), "\n"))
-	msg = append(msg, message.Text(VURL, card.BvID))
+	msg = append(msg, message.Text("点赞: ", humanNum(card.Stat.Like), " 投币: ", humanNum(card.Stat.Coin), "\n",
+		"收藏: ", humanNum(card.Stat.Favorite), " 分享: ", humanNum(card.Stat.Share), "\n",
+		VURL, card.BvID))
 	return
 }
 

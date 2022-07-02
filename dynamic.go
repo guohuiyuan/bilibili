@@ -90,9 +90,9 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 	// 生成消息
 	switch cType {
 	case 1:
-		msg = append(msg, message.Text(card.User.Uname, typeMsg[cType], "\n"))
-		msg = append(msg, message.Text(card.Item.Content, "\n"))
-		msg = append(msg, message.Text("转发的内容: \n"))
+		msg = append(msg, message.Text(card.User.Uname, typeMsg[cType], "\n",
+			card.Item.Content, "\n",
+			"转发的内容: \n"))
 		var originMsg []message.MessageSegment
 		originMsg, err = DynamicCard2msg(card.Origin, card.Item.OrigType)
 		if err != nil {
@@ -100,29 +100,29 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 		}
 		msg = append(msg, originMsg...)
 	case 2:
-		msg = append(msg, message.Text(card.User.Name, "在", time.Unix(int64(card.Item.UploadTime), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n"))
-		msg = append(msg, message.Text(card.Item.Description))
+		msg = append(msg, message.Text(card.User.Name, "在", time.Unix(int64(card.Item.UploadTime), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n",
+			card.Item.Description))
 		for i := 0; i < len(card.Item.Pictures); i++ {
 			msg = append(msg, message.Image(card.Item.Pictures[i].ImgSrc))
 		}
 	case 4:
-		msg = append(msg, message.Text(card.User.Uname, "在", time.Unix(int64(card.Item.Timestamp), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n"))
-		msg = append(msg, message.Text(card.Item.Content, "\n"))
+		msg = append(msg, message.Text(card.User.Uname, "在", time.Unix(int64(card.Item.Timestamp), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n",
+			card.Item.Content, "\n"))
 	case 8:
-		msg = append(msg, message.Text(card.Owner.Name, "在", time.Unix(int64(card.Pubdate), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n"))
-		msg = append(msg, message.Text(card.Title))
+		msg = append(msg, message.Text(card.Owner.Name, "在", time.Unix(int64(card.Pubdate), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n",
+			card.Title))
 		msg = append(msg, message.Image(card.Pic))
-		msg = append(msg, message.Text(card.Desc, "\n"))
-		msg = append(msg, message.Text(card.ShareSubtitle, "\n"))
-		msg = append(msg, message.Text("视频链接: ", card.ShortLink, "\n"))
+		msg = append(msg, message.Text(card.Desc, "\n",
+			card.ShareSubtitle, "\n",
+			"视频链接: ", card.ShortLink, "\n"))
 	case 16:
-		msg = append(msg, message.Text(card.User.Name, "在", time.Unix(int64(card.Item.UploadTime), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n"))
-		msg = append(msg, message.Text(card.Item.Description))
+		msg = append(msg, message.Text(card.User.Name, "在", time.Unix(int64(card.Item.UploadTime), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n",
+			card.Item.Description))
 		msg = append(msg, message.Image(card.Item.Cover.Default))
 	case 64:
-		msg = append(msg, message.Text(card.Author.(map[string]interface{})["name"], "在", time.Unix(int64(card.PublishTime), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n"))
-		msg = append(msg, message.Text(card.Title, "\n"))
-		msg = append(msg, message.Text(card.Summary))
+		msg = append(msg, message.Text(card.Author.(map[string]interface{})["name"], "在", time.Unix(int64(card.PublishTime), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n",
+			card.Title, "\n",
+			card.Summary))
 		for i := 0; i < len(card.ImageUrls); i++ {
 			msg = append(msg, message.Image(card.ImageUrls[i]))
 		}
@@ -130,8 +130,8 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 			msg = append(msg, message.Text("文章链接: https://www.bilibili.com/read/cv", card.ID, "\n"))
 		}
 	case 256:
-		msg = append(msg, message.Text(card.Upper, "在", time.Unix(int64(card.Ctime), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n"))
-		msg = append(msg, message.Text(card.Title))
+		msg = append(msg, message.Text(card.Upper, "在", time.Unix(int64(card.Ctime), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n",
+			card.Title))
 		msg = append(msg, message.Image(card.Cover))
 		msg = append(msg, message.Text(card.Intro, "\n"))
 		if card.ID != 0 {
@@ -139,10 +139,10 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 		}
 
 	case 2048:
-		msg = append(msg, message.Text(card.User.Uname, typeMsg[cType], "\n"))
-		msg = append(msg, message.Text(card.Vest.Content, "\n"))
-		msg = append(msg, message.Text(card.Sketch.Title, "\n"))
-		msg = append(msg, message.Text(card.Sketch.DescText, "\n"))
+		msg = append(msg, message.Text(card.User.Uname, typeMsg[cType], "\n",
+			card.Vest.Content, "\n",
+			card.Sketch.Title, "\n",
+			card.Sketch.DescText, "\n"))
 		msg = append(msg, message.Image(card.Sketch.CoverURL))
 		msg = append(msg, message.Text("分享链接: ", card.Sketch.TargetURL, "\n"))
 	case 4308:

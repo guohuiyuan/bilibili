@@ -30,10 +30,9 @@ func ArticleCard2msg(str string, defaultID string) (msg []message.MessageSegment
 	for i := 0; i < len(card.OriginImageUrls); i++ {
 		msg = append(msg, message.Image(card.OriginImageUrls[i]))
 	}
-	msg = append(msg, message.Text(card.Title, "\n"))
-	msg = append(msg, message.Text("UP主: ", card.AuthorName, "\n"))
-	msg = append(msg, message.Text(humanNum(card.Stats.View), "阅读 ", humanNum(card.Stats.Reply), "评论", "\n"))
-	msg = append(msg, message.Text(CURL, defaultID))
+	msg = append(msg, message.Text(card.Title, "\n", "UP主: ", card.AuthorName, "\n",
+		"阅读: ", humanNum(card.Stats.View), " 评论: ", humanNum(card.Stats.Reply), "\n",
+		CURL, defaultID))
 	return
 }
 
