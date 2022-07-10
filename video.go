@@ -30,9 +30,26 @@ func VideoCard2msg(str string) (msg []message.MessageSegment, err error) {
 	if err != nil {
 		return
 	}
-	msg = append(msg, message.Text("标题: ", card.Title, "\n",
-		"UP主: ", card.Owner.Name, "\n",
-		"播放: ", humanNum(card.Stat.View), " 弹幕: ", humanNum(card.Stat.Danmaku)))
+	msg = append(msg, message.Text("标题: ", card.Title, "\n"))
+	if card.Rights.IsCooperation == 1 {
+		for i := 0; i < len(card.Staff); i++ {
+			msg = append(msg, message.Text(card.Staff[i].Title, ": ", card.Staff[i].Name, " 粉丝: ", humanNum(card.Staff[i].Follower), "\n"))
+		}
+	} else {
+		var memberCard MemberCard
+		var data []byte
+		data, err = web.GetData(fmt.Sprintf(MemberCardURL, card.Owner.Mid))
+		if err != nil {
+			return
+		}
+		str := gjson.ParseBytes(data).Get("card").String()
+		err = json.Unmarshal(binary.StringToBytes(str), &memberCard)
+		if err != nil {
+			return
+		}
+		msg = append(msg, message.Text("UP主: ", card.Owner.Name, " 粉丝: ", humanNum(memberCard.Fans), "\n"))
+	}
+	msg = append(msg, message.Text("播放: ", humanNum(card.Stat.View), " 弹幕: ", humanNum(card.Stat.Danmaku)))
 	msg = append(msg, message.Image(card.Pic))
 	msg = append(msg, message.Text("点赞: ", humanNum(card.Stat.Like), " 投币: ", humanNum(card.Stat.Coin), "\n",
 		"收藏: ", humanNum(card.Stat.Favorite), " 分享: ", humanNum(card.Stat.Share), "\n",

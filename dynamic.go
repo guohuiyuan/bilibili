@@ -39,8 +39,16 @@ var (
 
 // DynamicCard 总动态结构体,包括desc,card
 type DynamicCard struct {
-	Desc Desc   `json:"desc"`
-	Card string `json:"card"`
+	Desc      Desc   `json:"desc"`
+	Card      string `json:"card"`
+	Extension struct {
+		VoteCfg struct {
+			VoteID  int    `json:"vote_id"`
+			Desc    string `json:"desc"`
+			JoinNum int    `json:"join_num"`
+		} `json:"vote_cfg"`
+		Vote string `json:"vote"`
+	} `json:"extension"`
 }
 
 // Desc 描述结构体
@@ -64,6 +72,7 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 	var (
 		dynamicCard DynamicCard
 		card        Card
+		vote        Vote
 	)
 	msg = make([]message.MessageSegment, 0, 16)
 	// 初始化结构体
@@ -76,6 +85,12 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 		err = json.Unmarshal(binary.StringToBytes(dynamicCard.Card), &card)
 		if err != nil {
 			return
+		}
+		if dynamicCard.Extension.Vote != "" {
+			err = json.Unmarshal(binary.StringToBytes(dynamicCard.Extension.Vote), &vote)
+			if err != nil {
+				return
+			}
 		}
 		cType = dynamicCard.Desc.Type
 	case 1, 2, 4, 8, 16, 64, 256, 2048, 4200, 4308:
@@ -108,6 +123,18 @@ func DynamicCard2msg(str string, cType int) (msg []message.MessageSegment, err e
 	case 4:
 		msg = append(msg, message.Text(card.User.Uname, "在", time.Unix(int64(card.Item.Timestamp), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n",
 			card.Item.Content, "\n"))
+		if dynamicCard.Extension.Vote != "" {
+			msg = append(msg, message.Text("【投票】", vote.Desc, "\n",
+				"截止日期: ", time.Unix(int64(vote.Endtime), 0).Format("2006-01-02 15:04:05"), "\n",
+				"参与人数: ", humanNum(vote.JoinNum), "\n",
+				"投票选项( 最多选择", vote.ChoiceCnt, "项 )\n"))
+			for i := 0; i < len(vote.Options); i++ {
+				msg = append(msg, message.Text("- ", vote.Options[i].Idx, ". ", vote.Options[i].Desc, "\n"))
+				if vote.Options[i].ImgURL != "" {
+					msg = append(msg, message.Image(vote.Options[i].ImgURL))
+				}
+			}
+		}
 	case 8:
 		msg = append(msg, message.Text(card.Owner.Name, "在", time.Unix(int64(card.Pubdate), 0).Format("2006-01-02 15:04:05"), typeMsg[cType], "\n",
 			card.Title))

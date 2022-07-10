@@ -56,4 +56,7 @@ func TestDynamicDetail(t *testing.T) {
 
 	t.Log("cType = 256")
 	t.Log(DynamicDetail("599253048535707632"))
+
+	t.Log("cType = 4,投票类型")
+	t.Log(DynamicDetail("677231070435868704"))
 }

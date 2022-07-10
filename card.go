@@ -53,6 +53,7 @@ type Card struct {
 	Owner struct {
 		Name    string `json:"name"`
 		Pubdate int    `json:"pubdate"`
+		Mid     int    `json:"mid"`
 	} `json:"owner"`
 	Cover        string      `json:"cover"`
 	ShortID      interface{} `json:"short_id"`
@@ -90,4 +91,25 @@ type Card struct {
 	Upper   string `json:"upper"`
 	Origin  string `json:"origin"`
 	Pubdate int    `json:"pubdate"`
+	Rights  struct {
+		IsCooperation int `json:"is_cooperation"`
+	} `json:"rights"`
+	Staff []struct {
+		Title    string `json:"title"`
+		Name     string `json:"name"`
+		Follower int    `json:"follower"`
+	} `json:"staff"`
+}
+
+// Vote 投票结构体
+type Vote struct {
+	ChoiceCnt int    `json:"choice_cnt"`
+	Desc      string `json:"desc"`
+	Endtime   int    `json:"endtime"`
+	JoinNum   int    `json:"join_num"`
+	Options   []struct {
+		Idx    int    `json:"idx"`
+		Desc   string `json:"desc"`
+		ImgURL string `json:"img_url"`
+	} `json:"options"`
 }
